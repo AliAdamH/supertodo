@@ -15,6 +15,8 @@ let todo = new todoItem(
         notes: 'bla bla bla'
     }
 );
+
+
 let secondTodo = new todoItem(
     {
         title: 'hello',
@@ -23,7 +25,7 @@ let secondTodo = new todoItem(
         priority: 1,
         notes: 'bla bla bla'
     }
-)
+);
 
 projectExample.addTodo(todo);
 projectExample.addTodo(secondTodo);
@@ -35,7 +37,25 @@ container.appendChild(projectContainer);
 const modal = document.querySelector('.modal');
 const addTodoBtn = document.querySelector('.addTodo');
 const closeTodoFormBtn = document.querySelector('.close-button');
+const todoForm = document.querySelector('.todo-form');
 
+function refreshProject() {
+    container.replaceChildren(renderProject(projectExample));
+}
+
+
+
+todoForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    let data = new FormData(e.target);
+    let dataObject = Object.fromEntries(data);
+    let newTodo = new todoItem(dataObject);
+    projectExample.addTodo(newTodo);
+    modal.close();
+    refreshProject();
+    todoForm.reset();
+})
 addTodoBtn.addEventListener('click', () => {
     modal.showModal();
 })
