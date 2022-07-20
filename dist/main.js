@@ -16,7 +16,27 @@
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _todo_domTodo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./todo/domTodo */ \"./src/todo/domTodo.js\");\n/* harmony import */ var _todo_todo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./todo/todo */ \"./src/todo/todo.js\");\n\n\n\n\nlet todo = new _todo_todo__WEBPACK_IMPORTED_MODULE_1__[\"default\"](\n    {\n        title: 'hello',\n        description: 'potato',\n        dueDate: '9/9/9',\n        priority: 1,\n        notes: 'bla bla bla'\n    }\n);\n\nconst container = document.querySelector('.example');\nconst todoContainer = (0,_todo_domTodo__WEBPACK_IMPORTED_MODULE_0__.renderTodo)(todo);\ncontainer.appendChild(todoContainer);\n\n//# sourceURL=webpack://supertodo/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _todo_domTodo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./todo/domTodo */ \"./src/todo/domTodo.js\");\n/* harmony import */ var _project_project__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./project/project */ \"./src/project/project.js\");\n/* harmony import */ var _project_domProject__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./project/domProject */ \"./src/project/domProject.js\");\n/* harmony import */ var _todo_todo__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./todo/todo */ \"./src/todo/todo.js\");\n\n\n\n\n\n\n\nconst projectExample = new _project_project__WEBPACK_IMPORTED_MODULE_1__[\"default\"]();\nlet todo = new _todo_todo__WEBPACK_IMPORTED_MODULE_3__[\"default\"](\n    {\n        title: 'hello',\n        description: 'potato',\n        dueDate: '9/9/9',\n        priority: 1,\n        notes: 'bla bla bla'\n    }\n);\nlet secondTodo = new _todo_todo__WEBPACK_IMPORTED_MODULE_3__[\"default\"](\n    {\n        title: 'hello',\n        description: 'potato',\n        dueDate: '9/9/9',\n        priority: 1,\n        notes: 'bla bla bla'\n    }\n)\n\nprojectExample.addTodo(todo);\nprojectExample.addTodo(secondTodo);\n\n\nconst container = document.querySelector('.example');\nconst projectContainer = (0,_project_domProject__WEBPACK_IMPORTED_MODULE_2__[\"default\"])(projectExample);\ncontainer.appendChild(projectContainer);\n\n//# sourceURL=webpack://supertodo/./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/project/domProject.js":
+/*!***********************************!*\
+  !*** ./src/project/domProject.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ renderProject)\n/* harmony export */ });\n/* harmony import */ var _todo_domTodo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../todo/domTodo */ \"./src/todo/domTodo.js\");\n\n\nfunction renderProject(project) {\n    const projectContainer = document.createElement('section');\n    const projectName = document.createElement('h2');\n    projectName.innerText = project.name;\n\n    project.todos.forEach(todo => {\n        projectContainer.appendChild((0,_todo_domTodo__WEBPACK_IMPORTED_MODULE_0__.renderTodo)(todo));\n    });\n\n    return projectContainer;\n}   \n\n\n\n//# sourceURL=webpack://supertodo/./src/project/domProject.js?");
+
+/***/ }),
+
+/***/ "./src/project/project.js":
+/*!********************************!*\
+  !*** ./src/project/project.js ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ project)\n/* harmony export */ });\nclass project {\n\n    constructor(name, todos = []) {\n        this.name = name;\n        this.todos = todos;\n    }\n\n    addTodo = (todo) => {\n        this.todos.push(todo)\n    }\n\n    removeTodo = (todo) => {\n        // remove Todo : Use index or something else ?\n    }\n}\n\n//# sourceURL=webpack://supertodo/./src/project/project.js?");
 
 /***/ }),
 
