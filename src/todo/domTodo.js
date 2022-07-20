@@ -8,7 +8,7 @@ function renderContainer() {
 
 function renderDescription(content) {
     const description = document.createElement('p');
-    description.add('todo__description');
+    description.classList.add('todo__description');
     description.innerText = content;
 
     return description;
@@ -22,12 +22,12 @@ function renderInformations({dueDate,priority}) {
     infos.classList.add('todo__infos');
 
     const dueDateElement = document.createElement('li');
-    dueDateElement.innerText = date;
+    dueDateElement.innerText = dueDate;
 
     const priorityElement = document.createElement('li');
     priorityElement.innerText = priority;
 
-    infos.appendChild(dueDate);
+    infos.appendChild(dueDateElement);
     infos.appendChild(priorityElement);
 
     return infos;
@@ -65,3 +65,6 @@ function renderTodo(todo) {
     return container;
 
 }
+
+
+export { renderTodo };
