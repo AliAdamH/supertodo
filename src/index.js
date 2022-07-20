@@ -32,3 +32,14 @@ projectExample.addTodo(secondTodo);
 const container = document.querySelector('.example');
 const projectContainer = renderProject(projectExample);
 container.appendChild(projectContainer);
+const modal = document.querySelector('.modal');
+const addTodoBtn = document.querySelector('.addTodo');
+const closeTodoFormBtn = document.querySelector('.close-button');
+
+addTodoBtn.addEventListener('click', () => {
+    modal.showModal();
+})
+
+closeTodoFormBtn.addEventListener('click', () => {
+    modal.close();
+})

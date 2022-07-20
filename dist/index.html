@@ -8,8 +8,48 @@
     <title>Document</title>
 </head>
 <body>
+    <header>
+        <nav>
+            <button class="addTodo">Add Todo</button>
+        </nav>
+    </header>
     <div class="example">
 
     </div>
+    <dialog class="modal" id="modal">
+        <h3>New Todo</h3>
+        <form action="" class="todo-form">
+            <div class="form-field">
+                <label for="title"> Title </label>
+                <input type="text" name="title" id="title">
+            </div>
+
+            <div class="form-field">
+                <label for="description"> Description </label>
+                <input type="text" name="description" id="description">
+            </div>
+            <div class="form-field">
+                <label for="project">Project Name: </label>
+                <select name="project" id="project">
+                    <option value="example">Example</option>
+                </select>
+            </div>
+            <div class="form-field">
+                <label for="dueDate">Due date</label>
+                <input type="number" name="dueDate" id="dueDate">
+            </div>
+            <div class="form-field">
+                <label for="priority"> Priority </label>
+                <input type="number" name="priority" id="priority">
+            </div>
+            <div class="form-field">
+                <label for="notes">Notes : </label>
+                <textarea name="notes" id="notes" cols="30" rows="10"></textarea>
+            </div>
+            <button type="submit" name="commit" class="submit">Add Todo</button>
+        </form>
+        <button class="btn close-button">Cancel</button>
+        </form>
+    </dialog>
 </body>
 </html>
