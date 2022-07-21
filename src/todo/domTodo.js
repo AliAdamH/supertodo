@@ -51,9 +51,10 @@ function renderTitle(content) {
 }
 
 
-function renderTodo(todo) {
+function renderTodo(todo, index) {
 
     let container = renderContainer();
+    container.dataset.todoIndex = index;
     let {title, description, dueDate, priority, notes } = todo;
     container.append(
         renderTitle(title),
