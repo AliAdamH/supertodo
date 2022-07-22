@@ -14,8 +14,10 @@ const closeTodoFormBtn = document.querySelector('.close-button');
 const todoForm = document.querySelector('.todo-form');
 const projectsBtn = document.querySelector('.projects');
 const todoFromSelect = todoForm.querySelector('select');
-
-console.log(todoFromSelect);
+const addProjectBtn = document.querySelector('.addProject');
+const projectModal = document.querySelector('.project-modal');
+const projectForm = document.querySelector('.project-form');
+const closeProjectForm = projectModal.querySelector('.close-btn')
 
 const projectExample = new project('starter');
 let todo = new todoItem(
@@ -46,7 +48,10 @@ projects.push(secondProjectExample);
 
 // Loop here.
 projects.forEach((p, index) => {
-    container.appendChild(renderProject(p, index));
+    // container.appendChild(renderProject(p, index));
+    p.todos.forEach((todo) => {
+        container.appendChild(renderTodo(todo));
+    })
 })
 
 
@@ -114,3 +119,24 @@ projects.forEach((p, index) => {
     todoFromSelect.appendChild(option);
 })
 
+
+
+// New project logic.
+
+addProjectBtn.addEventListener('click', () => {
+    projectModal.showModal();
+})
+
+closeProjectForm.addEventListener('click', () => {
+    projectModal.close();
+})
+
+
+projectForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let data = new FormData(e.target);
+    let { name } = Object.fromEntries(data);
+    let newProject = new project(name);
+    projects.push(newProject);
+    console.log(newProject);
+})

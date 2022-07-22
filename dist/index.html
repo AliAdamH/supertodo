@@ -12,6 +12,7 @@
         <nav>
             <button class="addTodo">Add Todo</button>
             <button class="projects">Projects</button>
+            <button class="addProject">Add Project</button>
         </nav>
     </header>
     <div class="example">
@@ -49,7 +50,17 @@
             <button type="submit" name="commit" class="submit">Add Todo</button>
         </form>
         <button class="btn close-button">Cancel</button>
-        </form>
+</dialog>
+<dialog class="project-modal">
+    <h3>New Project</h3>
+    <form action="" class="project-form" method="dialog">
+        <div class="form-field">
+            <label for="name"> Name : </label>
+            <input type="text" name="name" id="name">
+        </div>
+        <button type="submit">Add project</button>
+    </form>
+    <button class="close-btn">Cancel</button>
     </dialog>
 </body>
 </html>
