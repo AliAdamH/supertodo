@@ -2,7 +2,7 @@ import { renderTodo } from "./todo/domTodo";
 import project from "./project/project";
 import renderProject from "./project/domProject";
 import todoItem from "./todo/todo";
-
+import './style.css';
 
 
 let projects = [];
