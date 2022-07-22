@@ -12,9 +12,12 @@ const modal = document.querySelector('.modal');
 const addTodoBtn = document.querySelector('.addTodo');
 const closeTodoFormBtn = document.querySelector('.close-button');
 const todoForm = document.querySelector('.todo-form');
+const projectsBtn = document.querySelector('.projects');
+const todoFromSelect = todoForm.querySelector('select');
 
+console.log(todoFromSelect);
 
-const projectExample = new project();
+const projectExample = new project('starter');
 let todo = new todoItem(
     {
         title: 'hello',
@@ -25,9 +28,21 @@ let todo = new todoItem(
     }
 );
 
-projectExample.addTodo(todo);
-projects.push(projectExample);
+const secondProjectExample = new project('second');
+let secondTodo = new todoItem(
+    {
+        title: 'AAAAAAAAAAAAAA',
+        description: 'potato',
+        dueDate: '9/9/9',
+        priority: 1,
+        notes: 'bla bla bla'
+    }
+)
 
+projectExample.addTodo(todo);
+secondProjectExample.addTodo(secondTodo);
+projects.push(projectExample);
+projects.push(secondProjectExample);
 
 // Loop here.
 projects.forEach((p, index) => {
@@ -37,8 +52,8 @@ projects.forEach((p, index) => {
 
 // Helpers
 // this is gonna break.
-function refreshProject(p) {
-    container.replaceChildren(renderProject(p, 0));
+function refreshProject(p, index) {
+    container.replaceChildren(renderProject(p, index));
 }
 
 
@@ -73,3 +88,29 @@ addTodoBtn.addEventListener('click', () => {
 closeTodoFormBtn.addEventListener('click', () => {
     modal.close();
 })
+
+
+function projectList() {
+    return projects.map((p, index) => {
+        let btn = document.createElement('button');
+        btn.dataset.project = index;
+        btn.innerText = p.name;
+        btn.addEventListener('click', () => refreshProject(p,index));
+        return btn;
+    });
+}
+
+projectsBtn.addEventListener('click', () => {
+    // render the list of projects.
+    console.log(projectList());
+    container.replaceChildren(...projectList());
+})
+
+
+projects.forEach((p, index) => {
+    let option = document.createElement('option');
+    option.value = index;
+    option.innerText = p.name;
+    todoFromSelect.appendChild(option);
+})
+
