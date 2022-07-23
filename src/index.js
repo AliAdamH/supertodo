@@ -9,12 +9,11 @@ let projects = [];
 
 const container = document.querySelector('.example');
 const modal = document.querySelector('.modal');
-const addTodoBtn = document.querySelector('.addTodo');
+const pageTitle = document.querySelector('h1');
 const closeTodoFormBtn = document.querySelector('.close-button');
 const todoForm = document.querySelector('.todo-form');
 const projectsBtn = document.querySelector('.projects');
 const projectsListDetails = document.querySelector('.projects ul');
-const todoFromSelect = todoForm.querySelector('select');
 const addProjectBtn = document.querySelector('.addProject');
 const projectModal = document.querySelector('.project-modal');
 const projectForm = document.querySelector('.project-form');
@@ -77,22 +76,18 @@ todoForm.addEventListener('submit', (e) => {
     let data = new FormData(e.target);
     let dataObject = Object.fromEntries(data);
     let newTodo = new todoItem(dataObject);
-    // retrieve the project's index.
-    const projectIdx  = +newTodo.project || 0;
+    // retrieve the project's index (from the page itself).
+    const domProject = document.querySelector(`[data-project-index]`);
+    const projectIdx = +domProject.dataset.projectIndex;
     // find the project Object not dom, call the addTodo method on it.
     projects[projectIdx].addTodo(newTodo);
-    // find the project in the dom with a querySelector.
-    const domProject = document.querySelector(`[data-project-index='${projectIdx}']`);
-    console.log(domProject.childElementCount);
-    domProject.appendChild(renderTodo(newTodo, domProject.childElementCount));    
+    domProject.appendChild(renderTodo(newTodo, domProject.childElementCount));
+    
+    // console.log(domProject.childElementCount);
+    // domProject.appendChild(renderTodo(newTodo, domProject.childElementCount));    
 
     modal.close();
     todoForm.reset();
-})
-
-
-addTodoBtn.addEventListener('click', () => {
-    modal.showModal();
 })
 
 closeTodoFormBtn.addEventListener('click', () => {
@@ -124,14 +119,6 @@ projectsBtn.addEventListener('toggle', () => {
 })
 
 
-projects.forEach((p, index) => {
-    let option = document.createElement('option');
-    option.value = index;
-    option.innerText = p.name;
-    todoFromSelect.appendChild(option);
-})
-
-
 
 // New project logic.
 
@@ -155,6 +142,7 @@ projectForm.addEventListener('submit', (e) => {
 
 
 homeBtn.addEventListener('click', () => {
+    pageTitle.innerText = 'All todos';
     container.replaceChildren(...renderHome());
 })
 
