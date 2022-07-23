@@ -115,8 +115,9 @@ dialog {
 .projects {
     padding: 1rem;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1rem;
     font-size: 1.2rem;
 }
 
@@ -126,4 +127,33 @@ dialog {
     align-items: center;
     gap: 0.5rem;
     font-size: 1.2rem;
+}
+
+
+
+details > summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 0.5rem;
+    font-size: 1.2rem;
+}
+
+
+.project-list {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.project-list a {
+    color: #eee;
+    text-decoration: none;
+}
+
+.project-list a:hover {
+    color: hsl(212,48%,65%);
 }

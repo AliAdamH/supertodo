@@ -13,6 +13,7 @@ const addTodoBtn = document.querySelector('.addTodo');
 const closeTodoFormBtn = document.querySelector('.close-button');
 const todoForm = document.querySelector('.todo-form');
 const projectsBtn = document.querySelector('.projects');
+const projectsListDetails = document.querySelector('.projects ul');
 const todoFromSelect = todoForm.querySelector('select');
 const addProjectBtn = document.querySelector('.addProject');
 const projectModal = document.querySelector('.project-modal');
@@ -101,18 +102,25 @@ closeTodoFormBtn.addEventListener('click', () => {
 
 function projectList() {
     return projects.map((p, index) => {
-        let btn = document.createElement('button');
-        btn.dataset.project = index;
-        btn.innerText = p.name;
-        btn.addEventListener('click', () => refreshProject(p,index));
-        return btn;
+        let item = document.createElement('li');
+        let link = document.createElement('a');
+        link.href = '#';
+        link.innerText = p.name;
+        link.dataset.project = index;
+        link.addEventListener('click', () => refreshProject(p,index));
+        item.appendChild(link);
+        return item;
     });
 }
 
-projectsBtn.addEventListener('click', () => {
-    // render the list of projects.
-    console.log(projectList());
-    container.replaceChildren(...projectList());
+projectsBtn.addEventListener('toggle', () => {
+    if(projectsBtn.open) {
+        projectList().forEach((p) => {
+            projectsListDetails.append(p);
+        })
+    } else {
+        projectsListDetails.replaceChildren();
+    }
 })
 
 
