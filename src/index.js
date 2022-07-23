@@ -138,6 +138,9 @@ projectForm.addEventListener('submit', (e) => {
     let newProject = new project(name);
     projects.push(newProject);
     console.log(newProject);
+    projectsListDetails.replaceChildren(...projectList());
+    projectForm.reset()
+    projectModal.close();
 })
 
 
