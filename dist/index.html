@@ -5,19 +5,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="main.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Document</title>
 </head>
 <body>
-    <header>
-        <nav>
-            <button class="addTodo">Add Todo</button>
-            <button class="projects">Projects</button>
-            <button class="addProject">Add Project</button>
-        </nav>
-    </header>
-    <div class="example">
+    <nav class="sidebar">
+        <button class="home"><span class="material-icons">home</span>Home</button>
+        <button class="addTodo"><span class="material-icons">add</span>Add Todo</button>
+        <button class="projects"><span class="material-icons">list</span>Projects</button>
+        <button class="addProject"><span class="material-icons">add</span>Add Project</button>
+    </nav>
+    <main class="main">
+        <div class="top"><h1 class="title">All Todos</h1></div>
+        <div class="example">
 
-    </div>
+        </div>
+    </main>
     <dialog class="modal" id="modal">
         <h3>New Todo</h3>
         <form action="" class="todo-form">

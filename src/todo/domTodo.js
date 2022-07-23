@@ -36,6 +36,7 @@ function renderInformations({dueDate,priority}) {
 
 function renderNotes(content) {
     const notes = document.createElement('p');
+    notes.classList.add('todo__notes');
     notes.innerText = content;
 
     return notes;

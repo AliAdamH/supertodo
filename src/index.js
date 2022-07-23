@@ -18,6 +18,7 @@ const addProjectBtn = document.querySelector('.addProject');
 const projectModal = document.querySelector('.project-modal');
 const projectForm = document.querySelector('.project-form');
 const closeProjectForm = projectModal.querySelector('.close-btn')
+const homeBtn = document.querySelector('.home');
 
 const projectExample = new project('starter');
 let todo = new todoItem(
@@ -47,13 +48,16 @@ projects.push(projectExample);
 projects.push(secondProjectExample);
 
 // Loop here.
-projects.forEach((p, index) => {
-    // container.appendChild(renderProject(p, index));
-    p.todos.forEach((todo) => {
-        container.appendChild(renderTodo(todo));
+function renderHome() {
+    let todosList = []
+    projects.forEach((p, index) => {
+        p.todos.forEach((todo) => {
+            todosList.push(renderTodo(todo));
+        })
     })
-})
 
+    return todosList;
+}
 
 // Helpers
 // this is gonna break.
@@ -139,4 +143,13 @@ projectForm.addEventListener('submit', (e) => {
     let newProject = new project(name);
     projects.push(newProject);
     console.log(newProject);
+})
+
+
+homeBtn.addEventListener('click', () => {
+    container.replaceChildren(...renderHome());
+})
+
+document.addEventListener('DOMContentLoaded', () => {
+    container.replaceChildren(...renderHome());
 })
