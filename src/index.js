@@ -19,7 +19,9 @@ const projectModal = document.querySelector('.project-modal');
 const projectForm = document.querySelector('.project-form');
 const closeProjectForm = projectModal.querySelector('.close-btn')
 const homeBtn = document.querySelector('.home');
-
+const ProjectEditForm = document.querySelector('.edit-project-form');
+const ProjectEditModal = document.querySelector('.edit-project-modal');
+const closeProjectEditModal = ProjectEditModal.querySelector('.close-btn');
 const projectExample = new project('starter');
 let todo = new todoItem(
     {
@@ -97,6 +99,16 @@ closeTodoFormBtn.addEventListener('click', () => {
 
 function projectList() {
     return projects.map((p, index) => {
+        let deleteBtn = document.createElement('button');
+        deleteBtn.innerHTML = '&cross;';
+        deleteBtn.dataset.project = index;
+        deleteBtn.addEventListener('click', (e) => deleteProject(e));
+
+        let editBtn = document.createElement('button');
+        editBtn.innerHTML = '&#9998;';
+        editBtn.dataset.project = index;
+        editBtn.addEventListener('click', (e) => editProject(e));
+
         let item = document.createElement('li');
         let link = document.createElement('a');
         link.href = '#';
@@ -104,6 +116,8 @@ function projectList() {
         link.dataset.project = index;
         link.addEventListener('click', () => refreshProject(p,index));
         item.appendChild(link);
+        item.appendChild(deleteBtn);
+        item.appendChild(editBtn);
         return item;
     });
 }
@@ -152,3 +166,38 @@ homeBtn.addEventListener('click', () => {
 document.addEventListener('DOMContentLoaded', () => {
     container.replaceChildren(...renderHome());
 })
+
+function  deleteProject(e) {
+    let projectIndex = e.target.dataset.project;
+    projects.splice(projectIndex, 1);
+    console.log('Project deleted !');
+    projectsListDetails.replaceChildren(...projectList());
+}
+
+function editProject(e) {
+    
+    let editProjectForm = document.querySelector('.edit-project-form');
+    let hiddenField = editProjectForm.querySelector(`[type='hidden']`);
+    let projectIndex = e.target.dataset.project;
+    let projectName = projects[projectIndex].name;
+    let nameField = editProjectForm.querySelector(`[name='name']`);
+    nameField.value = projectName;
+    hiddenField.value = projectIndex;
+    ProjectEditModal.showModal();
+    closeProjectEditModal.addEventListener('click', () => ProjectEditModal.close());
+}
+
+
+ProjectEditForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let data = new FormData(e.target);
+    let { name, projectIdx } = Object.fromEntries(data);
+    projects[projectIdx].name = name;
+    console.log('Project has been updated. ');
+
+
+    projectsListDetails.replaceChildren(...projectList());
+    ProjectEditModal.close();
+    ProjectEditForm.reset();
+});
+

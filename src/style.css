@@ -150,7 +150,30 @@ details > summary {
     gap: 1rem;
 }
 
+
+.project-list li {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+}
+
+.project-list li button {
+    border-radius: 1rem;
+    background-color: hsl(212,48%,65%);
+    width: 2rem;
+    color: hsl(212,48%,18%);
+    transition: background-color 0.25s ease-in;
+}
+
+.project-list li button:hover {
+    background-color: hsl(7, 96%, 57%);
+}
+
+
+
 .project-list a {
+    flex: 1;
+    display: block;
     color: #eee;
     text-decoration: none;
 }
