@@ -43,12 +43,14 @@ function renderNotes(content) {
 
 }
 
-function renderTitle(content) {
+function renderHeader(content) {
+    const headerWrapper = document.createElement('div');
     const title = document.createElement('h4');
     title.textContent = content;
-    title.classList.add('todo__title');
-    
-    return title;
+    headerWrapper.classList.add('todo__header');
+    headerWrapper.appendChild(title);
+
+    return headerWrapper;
 }
 
 
@@ -58,7 +60,7 @@ function renderTodo(todo, index) {
     container.dataset.todoIndex = index;
     let {title, description, dueDate, priority, notes } = todo;
     container.append(
-        renderTitle(title),
+        renderHeader(title),
         renderDescription(description),
         renderInformations({dueDate, priority}),
         renderNotes(notes)

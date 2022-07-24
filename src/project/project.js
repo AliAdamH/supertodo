@@ -9,7 +9,8 @@ export default class project {
         this.todos.push(todo)
     }
 
-    removeTodo = (todo) => {
+    removeTodo = (index) => {
         // remove Todo : Use index or something else ?
+        this.todos.splice(index, 1);
     }
 }

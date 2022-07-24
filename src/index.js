@@ -22,6 +22,11 @@ const homeBtn = document.querySelector('.home');
 const ProjectEditForm = document.querySelector('.edit-project-form');
 const ProjectEditModal = document.querySelector('.edit-project-modal');
 const closeProjectEditModal = ProjectEditModal.querySelector('.close-btn');
+
+const  editTodoModal = document.querySelector('.edit-todo-modal');
+const  editTodoForm = document.querySelector('.edit-todo-form');
+
+
 const projectExample = new project('starter');
 let todo = new todoItem(
     {
@@ -65,6 +70,10 @@ function renderHome() {
 // this is gonna break.
 function refreshProject(p, index) {
     container.replaceChildren(renderProject(p, index));
+    let todoEditBtn = document.querySelectorAll('.todo__edit-btn');
+    if(todoEditBtn) {
+        todoEditBtn.forEach((button) => button.addEventListener('click', (e) => editTodo(e)));
+    }
 }
 
 
@@ -83,11 +92,10 @@ todoForm.addEventListener('submit', (e) => {
     const projectIdx = +domProject.dataset.projectIndex;
     // find the project Object not dom, call the addTodo method on it.
     projects[projectIdx].addTodo(newTodo);
-    domProject.appendChild(renderTodo(newTodo, domProject.childElementCount));
-    
+    // domProject.appendChild(renderTodo(newTodo, domProject.childElementCount));
     // console.log(domProject.childElementCount);
     // domProject.appendChild(renderTodo(newTodo, domProject.childElementCount));    
-
+    refreshProject(projects[projectIdx], projectIdx);
     modal.close();
     todoForm.reset();
 })
@@ -167,6 +175,8 @@ document.addEventListener('DOMContentLoaded', () => {
     container.replaceChildren(...renderHome());
 })
 
+
+// Project Delete/Update;
 function  deleteProject(e) {
     let projectIndex = e.target.dataset.project;
     projects.splice(projectIndex, 1);
@@ -201,3 +211,60 @@ ProjectEditForm.addEventListener('submit', (e) => {
     ProjectEditForm.reset();
 });
 
+
+
+function editTodo(e) {
+    let { todoIdx } = e.target.dataset;
+    let { projectIndex } = document.querySelector('section').dataset;
+    let todoObj = projects[projectIndex].todos[todoIdx]
+
+    // Get the fields.
+    let titleField = editTodoForm.querySelector(`[name='title']`);
+    let descriptionField = editTodoForm.querySelector(`[name='description']`);
+    let dueDateField = 'TODO';
+    let priorityField = editTodoForm.querySelector(`[name='priority']`);
+    let notesField = editTodoForm.querySelector(`[name='notes']`);
+
+    let projectIdHidden = editTodoForm.querySelector(`[name='projectIdx']`)
+    let todoIdHidden = editTodoForm.querySelector(`[name='todoIdx']`)
+    projectIdHidden.value = projectIndex;
+    todoIdHidden.value = todoIdx;
+
+
+    // remove this later ofc.
+    let closeBtn = editTodoModal.querySelector('.close-button');
+    // end
+    titleField.value = todoObj.title;
+    descriptionField.value = todoObj.description;
+    priorityField.value = todoObj.priority;
+    notesField.value = todoObj.notes;
+
+    editTodoModal.showModal();
+    closeBtn.addEventListener('click', () => editTodoModal.close());
+}
+
+
+editTodoForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let data = new FormData(e.target);
+    let dataObject = Object.fromEntries(data);
+    let {   description, notes, priority, projectIdx, title, todoIdx } = dataObject;
+    let p = projects[projectIdx].todos[todoIdx];
+
+    p.description = description;
+    p.notes = notes;
+    p.priority = priority;
+    p.title = title;
+    
+    //replace the current todo node with a new node.
+    // get the parent node.
+    // let parent = document.querySelector('section.project-container');
+    // let oldChild = document.querySelector(`[data-todo-index='${todoIdx}']`);
+    // // It's buggy because render todo doesn't include the buttons, we'll fix that.
+    // let newChild = renderTodo(p, todoIdx);
+    // parent.replaceChild(newChild, oldChild);
+
+    refreshProject(projects[projectIdx], projectIdx);
+    editTodoModal.close()
+
+})

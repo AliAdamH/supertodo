@@ -14,11 +14,33 @@ export default function renderProject(project, index) {
     projectName.innerText = project.name;
     
 
+    const deleteBtn = (todoIndex, c) => {
+        let btn = document.createElement('button');
+        btn.innerText = 'DELETE TODO';
+        btn.addEventListener('click', () => {
+            project.removeTodo(todoIndex);
+            projectContainer.removeChild(c);
+        })
+        return btn;
+    }
+
+    const editBtn = (todoIndex) => {
+        let btn = document.createElement('button');
+        btn.innerText = 'EDIT TODO';
+        btn.classList.add('todo__edit-btn');
+        btn.dataset.todoIdx = todoIndex;
+        return btn;
+    }  
 
     projectContainer.appendChild(addTodo);
 
     project.todos.forEach((todo, index) => {
-        projectContainer.appendChild(renderTodo(todo, index));
+        let renderedTodo = renderTodo(todo, index);
+        let todoHeader = renderedTodo.querySelector('.todo__header');
+        todoHeader.appendChild(deleteBtn(index, renderedTodo));
+        todoHeader.appendChild(editBtn(index));
+        console.log(renderedTodo);
+        projectContainer.appendChild(renderedTodo);
     });
 
     return projectContainer;
