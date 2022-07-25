@@ -1,14 +1,14 @@
 export default class project {
 
-    constructor(name, todos = {}) {
+    constructor(name, todos = {}, createdTodos = 0) {
         this.name = name;
         this.todos = todos;
-        this.created_todos = 0;
+        this.createdTodos = createdTodos;
     }
 
     addTodo = (todo) => {
-        this.todos[this.created_todos] = todo;
-        this.created_todos += 1;
+        this.todos[this.createdTodos] = todo;
+        this.createdTodos += 1;
     }
 
     removeTodo = (index) => {

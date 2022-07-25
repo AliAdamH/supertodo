@@ -2,21 +2,23 @@ import todoItem from "../todo/todo";
 import project from "../project/project";
 
 export default function initializer(projectsObject) {
-    let projects = [];
+    let projects = {};
     for(const projectIndex in projectsObject) {
         let projectObject = projectsObject[projectIndex];
         let projectName = projectObject.name;
         let projectTodos = projectObject.todos;
+        let projectCreatedTodos = +projectObject.createdTodos; // Coerce into number
 
-        let todos = [];
+
+        let todos = {};
         for(const todoObj in projectTodos) {
             let newTodo = new todoItem(projectTodos[todoObj]);
-            todos.push(newTodo);
+            todos[todoObj] = newTodo;
         }
 
-        let newProject = new project({ name: projectName, todos });
+        let newProject = new project(projectName, todos, projectCreatedTodos);
 
-        projects.push(newProject);
+        projects[projectIndex] = newProject;
     }
 
     return projects;
