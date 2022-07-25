@@ -3,17 +3,21 @@ import project from "./project/project";
 import renderProject from "./project/domProject";
 import todoItem from "./todo/todo";
 import initializer from "./storage/initializer";
-import { STORAGE_KEY } from "./storage/key";
+import { STORAGE_KEY, CREATED_PROJECTS_COUNT_KEY } from "./storage/key";
 import { serialize, deserialize } from './helpers/serialize';
 import './style.css';
 
 
-let projects = [];
-if(localStorage.getItem(STORAGE_KEY)) {
+let projects = {};
+let createdProjects = 0;
+if(localStorage.getItem(STORAGE_KEY) && localStorage.getItem(CREATED_PROJECTS_COUNT_KEY)) {
     let projectsHash = deserialize(localStorage.getItem(STORAGE_KEY));
+    let projectCount = +deserialize(localStorage.getItem(CREATED_PROJECTS_COUNT_KEY));
     projects = initializer(projectsHash);
+    createdProjects = projectCount;
 } else {
-    localStorage.setItem(STORAGE_KEY, '[]');
+    localStorage.setItem(STORAGE_KEY, '{}');
+    localStorage.setItem(CREATED_PROJECTS_COUNT_KEY, 0);
 }
 
 const container = document.querySelector('.example');
@@ -60,17 +64,27 @@ let secondTodo = new todoItem(
 
 projectExample.addTodo(todo);
 secondProjectExample.addTodo(secondTodo);
-projects.push(projectExample);
-projects.push(secondProjectExample);
-
+projects[createdProjects] = projectExample;
+createdProjects += 1;
+projects[createdProjects] = secondProjectExample;
+createdProjects += 1;
+console.log(createdProjects);
+localStorage.setItem(CREATED_PROJECTS_COUNT_KEY, createdProjects);
 // Loop here.
 function renderHome() {
+    // Change the foreach for a hash iteration.
     let todosList = []
-    projects.forEach((p, index) => {
+    for(const projectIndex in projects) {
+        let p = projects[projectIndex];
         p.todos.forEach((todo) => {
             todosList.push(renderTodo(todo));
         })
-    })
+    }
+    // projects.forEach((p, index) => {
+    //     p.todos.forEach((todo) => {
+    //         todosList.push(renderTodo(todo));
+    //     })
+    // })
 
     return todosList;
 }
@@ -115,7 +129,13 @@ closeTodoFormBtn.addEventListener('click', () => {
 
 
 function projectList() {
-    return projects.map((p, index) => {
+    //modify this map, to a for const projectIndx in projects, you can return an array for this purpose.
+    let list = [];
+
+    for(const index in projects) {
+        let p = projects[index];
+    
+    // return projects.map((p, index) => {
         let deleteBtn = document.createElement('button');
         deleteBtn.innerHTML = '&cross;';
         deleteBtn.dataset.project = index;
@@ -135,8 +155,12 @@ function projectList() {
         item.appendChild(link);
         item.appendChild(deleteBtn);
         item.appendChild(editBtn);
-        return item;
-    });
+        
+        list.push(item);
+    // });
+    }
+
+    return list;
 }
 
 projectsBtn.addEventListener('toggle', () => {
@@ -163,12 +187,15 @@ closeProjectForm.addEventListener('click', () => {
 
 
 projectForm.addEventListener('submit', (e) => {
+    //This was updated.
     e.preventDefault();
     let data = new FormData(e.target);
     let { name } = Object.fromEntries(data);
     let newProject = new project(name);
-    projects.push(newProject);
+    projects[createdProjects] = newProject;
     console.log(newProject);
+    createdProjects += 1;
+    localStorage.setItem(CREATED_PROJECTS_COUNT_KEY, createdProjects);
     projectsListDetails.replaceChildren(...projectList());
     projectForm.reset()
     projectModal.close();
@@ -187,14 +214,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Project Delete/Update;
 function  deleteProject(e) {
+    //reaplce the splice with a simple delete  + delete from storage.
     let projectIndex = e.target.dataset.project;
-    projects.splice(projectIndex, 1);
+    // projects.splice(projectIndex, 1);
+    delete projects[projectIndex];
+    // add deletion from storage here.
     console.log('Project deleted !');
     projectsListDetails.replaceChildren(...projectList());
 }
 
 function editProject(e) {
-    
+    // This should be fine.
     let editProjectForm = document.querySelector('.edit-project-form');
     let hiddenField = editProjectForm.querySelector(`[type='hidden']`);
     let projectIndex = e.target.dataset.project;
@@ -208,6 +238,7 @@ function editProject(e) {
 
 
 ProjectEditForm.addEventListener('submit', (e) => {
+    // This should be fine, only add storage method here.
     e.preventDefault();
     let data = new FormData(e.target);
     let { name, projectIdx } = Object.fromEntries(data);
