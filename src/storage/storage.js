@@ -2,7 +2,7 @@ import { STORAGE_KEY } from "./key";
 import { serialize, deserialize } from '../helpers/serialize';
 
 
-function addTodoToStorage(projectIndex, todoIndex, todoObj) {
+function storeTodo(projectIndex, todoIndex, todoObj) {
     //1. Get the storage data.
     let data = deserialize(localStorage.getItem(STORAGE_KEY));
 
@@ -15,19 +15,19 @@ function addTodoToStorage(projectIndex, todoIndex, todoObj) {
 }
 
 
-function addProjectToStorage(projectIndex, projectObject) {
+function storeProject(projectIndex, projectObject) {
     let data = deserialize(localStorage.getItem(STORAGE_KEY));
     data[projectIndex] = projectObject;
     let stringified = serialize(data);
     localStorage.setItem(STORAGE_KEY, stringified);
 }
 
-function  updateTodoInStorage(projectIndex, todoIndex, todoObj) {
-    addTodoToStorage(projectIndex,todoIndex, todoObj );
+function  updateTodo(projectIndex, todoIndex, todoObj) {
+    storeTodo(projectIndex,todoIndex, todoObj);
 }
 
-function updateProjectInStorage(projectIndex, projectObject) {
-    addProjectToStorage(projectIndex, projectObject);
+function updateProject(projectIndex, projectObject) {
+    storeProject(projectIndex, projectObject);
 }
 
 function deleteTodoFromStorage(projectIndex, todoIndex) {
@@ -44,3 +44,6 @@ function deleteProjectFromStorage(projectIndex) {
     localStorage.setItem(STORAGE_KEY, stringified);
 }
 
+
+
+export { storeTodo, storeProject, updateTodo, updateProject, deleteTodoFromStorage, deleteProjectFromStorage};

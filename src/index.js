@@ -5,6 +5,7 @@ import todoItem from "./todo/todo";
 import initializer from "./storage/initializer";
 import { STORAGE_KEY, CREATED_PROJECTS_COUNT_KEY } from "./storage/key";
 import { serialize, deserialize } from './helpers/serialize';
+import { storeTodo, storeProject, updateTodo, updateProject, deleteTodoFromStorage, deleteProjectFromStorage } from './storage/storage';
 import './style.css';
 
 
@@ -65,11 +66,16 @@ let secondTodo = new todoItem(
 projectExample.addTodo(todo);
 secondProjectExample.addTodo(secondTodo);
 projects[createdProjects] = projectExample;
+storeProject(createdProjects, projectExample);
 createdProjects += 1;
+
 projects[createdProjects] = secondProjectExample;
+storeProject(createdProjects, secondProjectExample);
 createdProjects += 1;
 console.log(createdProjects);
 localStorage.setItem(CREATED_PROJECTS_COUNT_KEY, createdProjects);
+
+
 // Loop here.
 function renderHome() {
     // Change the foreach for a hash iteration.
@@ -223,6 +229,7 @@ function  deleteProject(e) {
     // projects.splice(projectIndex, 1);
     delete projects[projectIndex];
     // add deletion from storage here.
+    deleteProjectFromStorage(projectIndex);
     console.log('Project deleted !');
     projectsListDetails.replaceChildren(...projectList());
 }
@@ -248,8 +255,8 @@ ProjectEditForm.addEventListener('submit', (e) => {
     let { name, projectIdx } = Object.fromEntries(data);
     projects[projectIdx].name = name;
     console.log('Project has been updated. ');
-
-
+    // add update storage here.
+    updateProject(projectIdx, projects[projectIdx]);
     projectsListDetails.replaceChildren(...projectList());
     ProjectEditModal.close();
     ProjectEditForm.reset();
