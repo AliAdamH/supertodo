@@ -1,4 +1,5 @@
 import { renderTodo } from "../todo/domTodo";
+import { deleteTodoFromStorage } from "../storage/storage";
 
 export default function renderProject(project, index) {
     const addTodo = document.createElement('button');
@@ -19,6 +20,7 @@ export default function renderProject(project, index) {
         btn.innerText = 'DELETE TODO';
         btn.addEventListener('click', () => {
             project.removeTodo(todoIndex);
+            deleteTodoFromStorage.call(window, index, todoIndex);
             projectContainer.removeChild(c);
         })
         return btn;

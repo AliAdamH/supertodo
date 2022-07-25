@@ -124,7 +124,9 @@ todoForm.addEventListener('submit', (e) => {
     const domProject = document.querySelector(`[data-project-index]`);
     const projectIdx = +domProject.dataset.projectIndex;
     // find the project Object not dom, call the addTodo method on it.
+    storeTodo(projectIdx, projects[projectIdx].createdTodos, newTodo);
     projects[projectIdx].addTodo(newTodo);
+    updateProject(projectIdx, projects[projectIdx]);
     // domProject.appendChild(renderTodo(newTodo, domProject.childElementCount));
     // console.log(domProject.childElementCount);
     // domProject.appendChild(renderTodo(newTodo, domProject.childElementCount));    
@@ -306,7 +308,7 @@ editTodoForm.addEventListener('submit', (e) => {
     p.notes = notes;
     p.priority = priority;
     p.title = title;
-    
+    storeTodo(projectIdx, todoIdx, p);
     //replace the current todo node with a new node.
     // get the parent node.
     // let parent = document.querySelector('section.project-container');
