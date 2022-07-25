@@ -76,9 +76,13 @@ function renderHome() {
     let todosList = []
     for(const projectIndex in projects) {
         let p = projects[projectIndex];
-        p.todos.forEach((todo) => {
+        // Change the foreach here since it becomes a hash.
+        for(const index in p.todos) {
+            let todo = p.todos[index];
+            // p.todos.forEach((todo) => {
             todosList.push(renderTodo(todo));
-        })
+                // })
+        }
     }
     // projects.forEach((p, index) => {
     //     p.todos.forEach((todo) => {

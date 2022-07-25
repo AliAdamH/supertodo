@@ -34,14 +34,18 @@ export default function renderProject(project, index) {
 
     projectContainer.appendChild(addTodo);
 
-    project.todos.forEach((todo, index) => {
+    // It's a hash so replace the foreach.
+    for(const index in project.todos) {
+        let todo = project.todos[index];
+        // project.todos.forEach((todo, index) => {
         let renderedTodo = renderTodo(todo, index);
         let todoHeader = renderedTodo.querySelector('.todo__header');
         todoHeader.appendChild(deleteBtn(index, renderedTodo));
         todoHeader.appendChild(editBtn(index));
         console.log(renderedTodo);
         projectContainer.appendChild(renderedTodo);
-    });
+            // });
+    }
 
     return projectContainer;
 }   
