@@ -2,10 +2,19 @@ import { renderTodo } from "./todo/domTodo";
 import project from "./project/project";
 import renderProject from "./project/domProject";
 import todoItem from "./todo/todo";
+import initializer from "./storage/initializer";
+import { STORAGE_KEY } from "./storage/key";
+import { serialize, deserialize } from './helpers/serialize';
 import './style.css';
 
 
 let projects = [];
+if(localStorage.getItem(STORAGE_KEY)) {
+    let projectsHash = deserialize(localStorage.getItem(STORAGE_KEY));
+    projects = initializer(projectsHash);
+} else {
+    localStorage.setItem(STORAGE_KEY, '[]');
+}
 
 const container = document.querySelector('.example');
 const modal = document.querySelector('.modal');
