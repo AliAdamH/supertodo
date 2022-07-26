@@ -206,6 +206,7 @@ projectForm.addEventListener('submit', (e) => {
     let newProject = new project(name);
     projects[createdProjects] = newProject;
     console.log(newProject);
+    storeProject(createdProjects, newProject);
     createdProjects += 1;
     localStorage.setItem(CREATED_PROJECTS_COUNT_KEY, createdProjects);
     projectsListDetails.replaceChildren(...projectList());
